@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://fetchly:fetchly@db:5432/fetchly
+    command: npx next dev 
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: fetchly
+      POSTGRES_USER: fetchly
+      POSTGRES_PASSWORD: fetchly
+    ports:
+      - "5432:5432"
